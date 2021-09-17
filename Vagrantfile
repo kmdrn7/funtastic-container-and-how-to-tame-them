@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     cf.ssh.host = "192.168.100.51"
     cf.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
-      vb.customize ["modifyvm", :id, "--memory", "1500"]
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
     end
   end
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
     cf.ssh.host = "192.168.100.52"
     cf.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
-      vb.customize ["modifyvm", :id, "--memory", "1500"]
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
     end
   end

@@ -70,6 +70,10 @@ frontend apiserver
 # haproxy various backends
 #---------------------------------------------------------------------
 backend apiserver
+    mode tcp
+    balance roundrobin
+    option tcp-check
 {% for master in groups['kubernetes_master'] %}
     server {{ hostvars[master]['ansible_facts']['hostname'] }} {{ master }}:6443 check fall 3 rise 2
 {% endfor %}
+

@@ -25,7 +25,7 @@
   become: true
   serial: 1
   roles:
-    - kubernetes/master
+    - kubernetes/master/base
     - role: cni/calico
       tags: kubecali
     - role: helm
