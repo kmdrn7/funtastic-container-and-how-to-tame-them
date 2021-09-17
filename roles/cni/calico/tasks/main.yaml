@@ -1,0 +1,18 @@
+- name: Create yaml folder in /opt
+  file:
+    path: /opt/yaml
+    state: directory
+    mode: '0755'
+
+- name: Copy calico cni config
+  template:
+    src: calico.yaml.j2
+    dest: /opt/yaml/calico.yaml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Apply calico cni
+  k8s:
+    state: present
+    src: /opt/yaml/calico.yaml

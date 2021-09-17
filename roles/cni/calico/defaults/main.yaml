@@ -1,0 +1,4 @@
+---
+# Networking
+network_pod_cidr: "11.244.0.0/16"
+network_interface: "eth0"

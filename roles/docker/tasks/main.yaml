@@ -1,0 +1,34 @@
+##################################################
+# Install Docker
+##################################################
+
+- name: Installing Dependency
+  include_tasks: deps.yaml
+
+- name: Install Docker Container Engine
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - docker-ce-{{ docker_version }}.*
+      - docker-ce-cli-{{ docker_version }}.*
+      - containerd.io
+
+- name: Change cgroup to Systemd
+  include_tasks: systemd-cgroup.yaml
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and Run Docker
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Setting sebool container_manage_cgroup
+  seboolean:
+    name: container_manage_cgroup
+    state: yes
+    persistent: yes

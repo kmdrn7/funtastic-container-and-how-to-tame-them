@@ -1,0 +1,14 @@
+---
+- name: Install Device Mapper & LVM2
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - device-mapper-persistent-data
+      - lvm2
+
+- name: Add Docker Repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo

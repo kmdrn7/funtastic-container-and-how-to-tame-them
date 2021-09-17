@@ -1,0 +1,15 @@
+---
+- name: get join command
+  shell: kubeadm token create --print-join-command
+  delegate_to: "{{ groups['master'][0] }}"
+  register: join_command
+
+- name: get certificate-key
+  shell: kubeadm init phase upload-certs --upload-certs
+  delegate_to: "{{ groups['master'][0] }}"
+  register: certs
+
+- name: register join command
+  add_host:
+    name: "master_worker_host"
+    master_join_command: "{{ join_command.stdout }} --certificate-key {{ certs.stdout_lines[2] }}"

@@ -1,0 +1,59 @@
+- hosts: kubernetes_cluster
+  become: true
+  roles:
+    - common
+    - docker
+    - kubernetes/base
+  tags:
+    - kubebase
+
+- hosts: haproxy
+  become: true
+  roles:
+    - common
+    - haproxy
+  pre_tasks:
+    - name: Gather facts from kubernetes master
+      ansible.builtin.setup:
+      delegate_facts: True
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['kubernetes_master'] }}"
+  tags:
+    - haproxy
+
+- hosts: master
+  become: true
+  serial: 1
+  roles:
+    - kubernetes/master
+    - role: cni/calico
+      tags: kubecali
+    - role: helm
+      tags: kubehelm
+    - role: kubernetes/get_join_info
+      tags: getjoininfo
+  pre_tasks:
+    - name: Gather facts from kubernetes loadbalancer
+      ansible.builtin.setup:
+      delegate_facts: True
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['haproxy'] }}"
+  tags:
+    - kube
+    - kubemaster
+
+- hosts: master_worker
+  become: true
+  roles:
+    - kubernetes/master/ha
+  tags:
+    - kube
+    - kubemasterha
+
+- hosts: worker
+  become: true
+  roles:
+    - kubernetes/worker
+  tags:
+    - kube
+    - kubeworker

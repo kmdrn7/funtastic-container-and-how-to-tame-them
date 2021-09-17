@@ -1,0 +1,21 @@
+---
+- name: Create a directory .kube
+  file:
+    path: ~/.kube
+    state: directory
+    mode: '0755'
+
+- name: Copy kubeconfig
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: ~/.kube/config
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy .kube/config to local
+  fetch:
+    src: /root/.kube/config
+    dest: ~/.kube/config
+    flat: yes

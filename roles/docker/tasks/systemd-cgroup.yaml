@@ -1,0 +1,11 @@
+- name: Create directory /etc/docker
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+- name: Create new docker config
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: /etc/docker/daemon.json
+    mode: '0644'

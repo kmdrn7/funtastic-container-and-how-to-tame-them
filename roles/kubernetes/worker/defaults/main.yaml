@@ -1,0 +1,11 @@
+---
+# Kubernetes
+kubernetes_version: 1.22.0
+
+# Networking
+network_service_cidr: "10.96.0.0/12"
+network_pod_cidr: "10.244.0.0/16"
+
+# Cluster Info
+kube_master_ip: "{{ hostvars[groups['haproxy'][0]]['ansible_eth0'].ipv4.address }}"
+kube_master_token: ecpysl.teal08z7ww5ge4t6

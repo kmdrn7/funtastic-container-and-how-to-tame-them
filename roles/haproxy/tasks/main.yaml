@@ -1,0 +1,31 @@
+- name: Install haproxy
+  yum:
+    name: haproxy
+    state: present
+
+- name: Setting sebool haproxy_connect_any
+  seboolean:
+    name: haproxy_connect_any
+    state: yes
+    persistent: yes
+
+- name: Configuring HAProxy
+  template:
+    src: "haproxy.conf.j2"
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Start and enable HAProxy service
+  systemd:
+    name: haproxy
+    enabled: yes
+    state: started
+
+- name: Configure firewall port 6443 for kubernetes apiserver
+  firewalld:
+    port: "6443/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled

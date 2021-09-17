@@ -1,0 +1,19 @@
+##################################################
+# Install Kubenetes Master
+##################################################
+- name: Check if kubeadm has already run
+  stat:
+    path: "/etc/kubernetes/pki/ca.key"
+  register: kubeadm_ca
+  tags:
+    - kubeinit
+
+- name: Join Kubernetes Control Plane
+  shell: |
+    {{ hostvars['master_worker_host']['master_join_command'] }} \
+    --control-plane \
+    --ignore-preflight-errors all
+  when: not kubeadm_ca.stat.exists
+  register: init_cluster
+  tags:
+    - kubeinit

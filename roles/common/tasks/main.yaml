@@ -1,0 +1,36 @@
+##################################################
+# Configure Common Server Setting
+##################################################
+
+- name: Switch off swap
+  command: swapoff -a
+
+- name: Disable Swap
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+
+- name: Disabled /swap on fstab
+  replace:
+    dest: /etc/fstab
+    regexp: '^/swapfile'
+    replace: '#/swapfile'
+
+- name: Enable Firewall
+  systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: Install nfs-utils
+  yum:
+    name:
+      - nfs-utils
+      - libsemanage-python
+    state: present
+
+- name: Add epel-release
+  yum:
+    name: epel-release
+    state: present

@@ -1,0 +1,34 @@
+##################################################
+# Install Kubenetes Master
+##################################################
+- name: Add python-pip and python-openshift
+  yum:
+    name:
+      - python-pip
+      - python-openshift
+    state: present
+
+- name: Check if kubeadm has already run
+  stat:
+    path: "/etc/kubernetes/pki/ca.key"
+  register: kubeadm_ca
+  tags:
+    - kubeinit
+
+- name: Init Kubernetes cluster
+  shell: |
+    kubeadm init --kubernetes-version {{ kubernetes_version }} \
+                --service-cidr {{ network_service_cidr }} \
+                --pod-network-cidr {{ network_pod_cidr }} \
+                --token {{ kube_master_token }} \
+                --control-plane-endpoint {{ kube_lb_internal }} \
+                --apiserver-cert-extra-sans {{ inventory_hostname }},{{ kube_lb_internal }} \
+                --upload-certs \
+                --ignore-preflight-errors all >> /root/cluster.txt
+  when: not kubeadm_ca.stat.exists
+  register: init_cluster
+  tags:
+    - kubeinit
+
+- name: Setup kubectl in local environment
+  include_tasks: setup_kubectl.yaml
