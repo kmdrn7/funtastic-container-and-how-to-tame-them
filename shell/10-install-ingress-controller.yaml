@@ -1,4 +1,0 @@
-#!/bin/bash
-
-curl -o nginx-ingress.yaml https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml
-kubectl apply -f nginx-ingress.yaml
