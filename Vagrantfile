@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
     cf.vm.network "public_network", :adapter=>1, :bridge=>"enx0033918108a8", :mac => "080027c4b71f"
     cf.ssh.host = "192.168.100.51"
     cf.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--cpus", "2"]
-      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--cpus", "4"]
+      vb.customize ["modifyvm", :id, "--memory", "4096"]
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
     end
   end
@@ -50,8 +50,8 @@ Vagrant.configure("2") do |config|
     cf.vm.network "public_network", :adapter=>1, :bridge=>"enx0033918108a8", :mac => "080027c4b72f"
     cf.ssh.host = "192.168.100.61"
     cf.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--cpus", "2"]
-      vb.customize ["modifyvm", :id, "--memory", "1500"]
+      vb.customize ["modifyvm", :id, "--cpus", "4"]
+      vb.customize ["modifyvm", :id, "--memory", "4096"]
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
     end
   end

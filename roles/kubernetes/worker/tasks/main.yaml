@@ -1,46 +1,6 @@
 ##################################################
 # Install Kubenetes Worker
 ##################################################
-- name: Prepare dependencies
-  include_tasks: deps.yaml
-
-- name: Install Kubelet, Kubeadm, Kubectl
-  yum:
-    name: "{{ packages }}"
-  vars:
-    packages:
-    - kubelet
-    - kubeadm
-    - kubectl
-
-- name: Enable and Run Kubelet
-  systemd:
-    name: kubelet
-    enabled: yes
-    state: started
-
-# - name: Enable Firewall
-#   systemd:
-#     name: firewalld
-#     enabled: yes
-#     state: started
-
-# - name: Enable firewall port for kubernetes
-#   firewalld:
-#     port: "{{ item }}"
-#     permanent: yes
-#     immediate: yes
-#     state: enabled
-#   loop:
-#   - 10250/tcp
-#   - 10251/tcp
-#   - 10252/tcp
-#   - 10255/tcp
-#   - 2379/tcp
-#   - 2380/tcp
-#   - 4789/udp
-#   - 5437/tcp
-#   - 179/tcp
 
 - name: Join Kubernetes Cluster
   shell: |

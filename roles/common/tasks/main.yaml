@@ -17,11 +17,11 @@
     regexp: '^/swapfile'
     replace: '#/swapfile'
 
-- name: Enable Firewall
-  systemd:
-    name: firewalld
-    enabled: yes
-    state: started
+# - name: Enable Firewall
+#   systemd:
+#     name: firewalld
+#     enabled: yes
+#     state: started
 
 - name: Install nfs-utils
   yum:

@@ -64,20 +64,29 @@
     enabled: yes
     state: started
 
-- name: Enable firewall port for kubernetes
-  firewalld:
-    port: "{{ item }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop:
-    - 6443/tcp
-    - 10250/tcp
-    - 10251/tcp
-    - 10252/tcp
-    - 10255/tcp
-    - 2379/tcp
-    - 2380/tcp
-    - 4789/udp
-    - 5437/tcp
-    - 179/tcp
+# - name: Enable firewall masquerade for kubernetes
+#   firewalld:
+#     masquerade: "yes"
+#     permanent: yes
+#     immediate: yes
+#     state: enabled
+
+# - name: Enable firewall port for kubernetes
+#   firewalld:
+#     port: "{{ item }}"
+#     permanent: yes
+#     immediate: yes
+#     state: enabled
+#   loop:
+#     - 443/udp
+#     - 6443/tcp
+#     - 10250/tcp
+#     - 10251/tcp
+#     - 10252/tcp
+#     - 10255/tcp
+#     - 8472/udp
+#     - 2379/tcp
+#     - 2380/tcp
+#     - 4789/udp
+#     - 5473/tcp
+#     - 179/tcp

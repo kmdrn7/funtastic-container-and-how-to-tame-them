@@ -18,7 +18,6 @@
 - name: Init Kubernetes cluster
   shell: |
     kubeadm init --kubernetes-version {{ kubernetes_version }} \
-                --service-cidr {{ network_service_cidr }} \
                 --pod-network-cidr {{ network_pod_cidr }} \
                 --token {{ kube_master_token }} \
                 --control-plane-endpoint {{ kube_lb_internal }} \
